@@ -1,0 +1,32 @@
+version: "3.8"
+
+# docker network create -d bridge backend-teamcity
+networks:
+  backend-teamcity:
+    external: true
+    name: backend-teamcity
+
+
+
+services:
+    sql-tc:
+        hostname: sql-tc
+        container_name: sql-tc
+        image: mcr.microsoft.com/mssql/server:2022-latest
+        user: root
+        networks:
+            - backend-teamcity
+        environment:
+            SA_PASSWORD: "@@SQL_SERVER_SA_PASSWORD@@"
+            ACCEPT_EULA: "Y"
+            MSSQL_PID: "Express"
+            MSSQL_DATA_DIR: /var/opt/mssql/data
+            MSSQL_LOG_DIR: /var/opt/mssql/logs
+            MSSQL_BACKUP_DIR: /var/opt/mssql/backups
+            MSSQL_MEMORY_LIMIT_MB: 2048
+            MSSQL_AGENT_ENABLED: "true"
+        volumes:
+            - /data/sql-server/data:/var/opt/mssql/data
+            - /data/sql-server/logs:/var/opt/mssql/logs
+            - /data/sql-server/backups:/var/opt/mssql/backups
+         
