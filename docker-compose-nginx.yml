@@ -10,6 +10,7 @@ services:
   nginx-tc:
     image: nginx:1.15-alpine
     container_name: nginx-tc
+    restart: unless-stopped
     volumes:
       - /app/nginx.conf:/etc/nginx/nginx.conf:ro
       - /data/ssl:/etc/nginx/certs
@@ -24,15 +25,13 @@ services:
   teamcity:
     image: jetbrains/teamcity-server:2023.05.2
     container_name: teamcity
-#    restart: unless-stopped
+    restart: unless-stopped
     volumes:
       - /data/teamcity/datadir:/data/teamcity_server/datadir
       - /data/teamcity/log:/opt/teamcity/logs
     networks:
       - backend-teamcity
-#    ports:
-#      - 8111:8111
     user: "root"
     environment:
-#      - TEAMCITY_HTTPS_PROXY_ENABLED=true
+      - TEAMCITY_HTTPS_PROXY_ENABLED=true
       - TEAMCITY_SERVER_MEM_OPTS=-Xmx2g -XX:ReservedCodeCacheSize=350m
