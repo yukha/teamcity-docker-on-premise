@@ -35,3 +35,5 @@ services:
     environment:
       - TEAMCITY_HTTPS_PROXY_ENABLED=true
       - TEAMCITY_SERVER_MEM_OPTS=-Xmx2g -XX:ReservedCodeCacheSize=350m
+      - TZ=Europe/Prague
+
