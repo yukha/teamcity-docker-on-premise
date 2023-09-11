@@ -39,3 +39,10 @@ docker-compose -f docker-compose-nginx.yml up -d
 ## First start
 Configure SQL Server as `sql-tc`, port 1433, user `sa`, password from your`.config.sh`.
 If you need to connect to this SQL Server from outside, uncomment port 1433 in `/app/docker-compose-nginx.yml` and restart it 
+
+## Set timezone in container
+```
+docker exec -it teamcity /bin/bash
+apt-get update && apt-get install -y tzdata
+dpkg-reconfigure tzdata
+```
